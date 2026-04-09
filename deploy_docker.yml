@@ -1,49 +1,52 @@
 ---
-- name: Build a Self-Healing Docker Host
+- name: Full Stack Self-Healing Lab
   hosts: all
   become: true
   tasks:
-    - name: 1. Install required system packages
-      apt:
-        name: [ca-certificates, curl, gnupg, lsb-release]
-        state: present
-        update_cache: yes
-
-    - name: 2. Create directory for Docker GPG key
+    - name: 1. Create All Necessary Directories
       file:
-        path: /etc/apt/keyrings
+        path: "/home/vagrant/{{ item }}"
         state: directory
-        mode: '0755'
+        owner: vagrant
+        group: docker
+      loop: [npm_data, letsencrypt, wp_data, db_data]
 
-    - name: 3. Add Docker’s official GPG key
-      get_url:
-        url: https://download.docker.com/linux/debian/gpg
-        dest: /etc/apt/keyrings/docker.asc
-        mode: 'a+r'
+    - name: 2. Create Docker Network
+      community.docker.docker_network:
+        name: my_lab_network
 
-    - name: 4. Add Docker Repository
-      apt_repository:
-        repo: "deb [arch=amd64 signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/debian {{ ansible_distribution_release }} stable"
-        state: present
-        filename: docker
-
-    - name: 5. Install Docker Engine and Plugin
-      apt:
-        name: [docker-ce, docker-ce-cli, containerd.io, docker-buildx-plugin, docker-compose-plugin]
-        state: present
-        update_cache: yes
-
-    - name: 6. Add vagrant user to docker group
-      user:
-        name: vagrant
-        groups: docker
-        append: yes
-
-    - name: 7. Deploy Nginx Container
+    - name: 3. Deploy Nginx Proxy Manager (The Receptionist)
       community.docker.docker_container:
-        name: web_server
-        image: nginx:latest
+        name: nginx-proxy-manager
+        image: jc21/nginx-proxy-manager:latest
         state: started
         restart_policy: always
+        networks: [{name: my_lab_network}]
         ports:
-          - "8080:80"
+          - "80:80"
+          - "81:81"
+          - "443:443"
+        volumes:
+          - /home/vagrant/npm_data:/data
+          - /home/vagrant/letsencrypt:/etc/letsencrypt
+
+    - name: 4. Deploy WordPress Stack (The App & DB)
+      community.docker.docker_container:
+        name: "{{ item.name }}"
+        image: "{{ item.image }}"
+        state: started
+        restart_policy: always
+        networks: [{name: my_lab_network}]
+        ports: "{{ item.ports | default(omit) }}"
+        env:
+          WORDPRESS_DB_HOST: wp_db
+          WORDPRESS_DB_USER: wp_user
+          WORDPRESS_DB_PASSWORD: wp_password
+          WORDPRESS_DB_NAME: wordpress_db
+          MYSQL_ROOT_PASSWORD: "kamran_root_password"
+          MYSQL_DATABASE: "wordpress_db"
+          MYSQL_USER: "wp_user"
+          MYSQL_PASSWORD: "wp_password"
+      loop:
+        - { name: wp_db, image: "mariadb:10.6" }
+        - { name: wp_site, image: "wordpress:latest", ports: ["8081:80"] }

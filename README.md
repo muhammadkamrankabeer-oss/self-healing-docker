@@ -1,20 +1,13 @@
-# Self-Healing Docker Infrastructure
-This project demonstrates an automated, "self-healing" web hosting environment built using **Vagrant**, **Ansible**, and **Docker**.
+# Self-Healing WordPress Stack
+Automated Infrastructure-as-Code (IaC) lab using Vagrant, Ansible, and Docker.
 
-## 🚀 Project Architecture
-- **Base OS:** Debian 12 (Bookworm)
-- **Infrastructure:** Vagrant (VirtualBox Provider)
-- **Automation:** Ansible (Provisioning)
-- **Containerization:** Docker & Docker Compose
-- **Self-Healing:** Docker `restart_policy: always` ensures services recover from crashes.
+## Features
+- **Self-Healing:** Docker restart policies for 99.9% uptime.
+- **Reverse Proxy:** Nginx Proxy Manager for clean local domains (`wordpress.test`).
+- **Automated:** One command setup with `vagrant up`.
 
-## 🛠️ How to Deploy
-1. Clone this repository.
-2. Ensure you have Vagrant and VirtualBox installed.
-3. Run `vagrant up`.
-4. Access the web server at `http://192.168.56.30:8080`.
-
-## 🎓 Learning Objectives
-- Infrastructure as Code (IaC)
-- Automated Repository Configuration (GPG Keys/APT)
-- Linux Permission Management (Docker Groups)
+## How to Run
+1. Clone this repo.
+2. Run `vagrant up`.
+3. Add `192.168.56.30 wordpress.test` to your /etc/hosts.
+4. Visit http://wordpress.test
