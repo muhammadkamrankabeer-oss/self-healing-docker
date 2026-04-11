@@ -1,52 +1,31 @@
 ---
-- name: Full Stack Self-Healing Lab
-  hosts: all
-  become: true
+- name: Lab 1 - The Hardened Gateway
+  hosts: localhost
+  connection: local
+  become: yes
+
   tasks:
-    - name: 1. Create All Necessary Directories
-      file:
-        path: "/home/vagrant/{{ item }}"
-        state: directory
-        owner: vagrant
-        group: docker
-      loop: [npm_data, letsencrypt, wp_data, db_data]
+    - name: 1. Ensure UFW is installed
+      apt:
+        name: ufw
+        state: present
+        update_cache: yes
 
-    - name: 2. Create Docker Network
-      community.docker.docker_network:
-        name: my_lab_network
+    - name: 2. Set Default Policies
+      community.general.ufw:
+        state: enabled
+        policy: deny
+        direction: incoming
 
-    - name: 3. Deploy Nginx Proxy Manager (The Receptionist)
-      community.docker.docker_container:
-        name: nginx-proxy-manager
-        image: jc21/nginx-proxy-manager:latest
-        state: started
-        restart_policy: always
-        networks: [{name: my_lab_network}]
-        ports:
-          - "80:80"
-          - "81:81"
-          - "443:443"
-        volumes:
-          - /home/vagrant/npm_data:/data
-          - /home/vagrant/letsencrypt:/etc/letsencrypt
+    - name: 3. Allow SSH
+      community.general.ufw:
+        rule: allow
+        port: '22'
+        proto: tcp
 
-    - name: 4. Deploy WordPress Stack (The App & DB)
-      community.docker.docker_container:
-        name: "{{ item.name }}"
-        image: "{{ item.image }}"
-        state: started
-        restart_policy: always
-        networks: [{name: my_lab_network}]
-        ports: "{{ item.ports | default(omit) }}"
-        env:
-          WORDPRESS_DB_HOST: wp_db
-          WORDPRESS_DB_USER: wp_user
-          WORDPRESS_DB_PASSWORD: wp_password
-          WORDPRESS_DB_NAME: wordpress_db
-          MYSQL_ROOT_PASSWORD: "kamran_root_password"
-          MYSQL_DATABASE: "wordpress_db"
-          MYSQL_USER: "wp_user"
-          MYSQL_PASSWORD: "wp_password"
-      loop:
-        - { name: wp_db, image: "mariadb:10.6" }
-        - { name: wp_site, image: "wordpress:latest", ports: ["8081:80"] }
+    - name: 4. Open Web Ports
+      community.general.ufw:
+        rule: allow
+        port: "{{ item }}"
+        proto: tcp
+      loop: ['80', '443', '81']
