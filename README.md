@@ -91,3 +91,13 @@ DevOps Enthusiast | Linux | Automation
 📜 License
 
 This project is open-source and available for learning and educational use.
+## 📸 Demo
+
+### 🌐 WordPress Homepage
+![Homepage](screenshots/homepage.png)
+
+### 🐳 Running Containers
+![Docker](screenshots/docker.png)
+
+### ⚙️ Vagrant Environment
+![Vagrant](screenshots/vagrant.png)
