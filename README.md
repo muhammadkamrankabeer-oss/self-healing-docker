@@ -35,7 +35,9 @@ The system is designed to automatically recover from failures, ensuring high ava
 -----
 
   🧪 Lab + Real-World Use Case
-Suitable for learning and small-scale production setups
+
+Suitable for learning and small-scale production setups.
+
 🏗️ Architecture
 Host Machine
    │
@@ -51,7 +53,6 @@ Host Machine
    │               └── Docker
    │                       ├── WordPress Container
    │                       └── MySQL Container
-
 ⚙️ Technologies Used
 Vagrant
 Ansible
@@ -78,7 +79,6 @@ http://192.168.56.30:8080
 This project uses Docker restart policies:
 
 restart: always
-
 👉 If a container stops, it is automatically restarted.
 
 💡 Use Cases
