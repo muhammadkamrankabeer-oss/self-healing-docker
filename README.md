@@ -31,7 +31,9 @@ The system is designed to automatically recover from failures, ensuring high ava
   Entire environment starts with:
   ```bash
   vagrant up
+
 -----
+
   🧪 Lab + Real-World Use Case
 Suitable for learning and small-scale production setups
 🏗️ Architecture
@@ -49,6 +51,7 @@ Host Machine
    │               └── Docker
    │                       ├── WordPress Container
    │                       └── MySQL Container
+
 ⚙️ Technologies Used
 Vagrant
 Ansible
@@ -91,6 +94,7 @@ DevOps Enthusiast | Linux | Automation
 📜 License
 
 This project is open-source and available for learning and educational use.
+
 ## 📸 Demo
 
 ### 🌐 WordPress Homepage
