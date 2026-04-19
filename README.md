@@ -61,20 +61,24 @@ Docker
 Docker Compose
 WordPress
 MySQL
+```
 🚀 Getting Started
 🔹 Prerequisites
 Vagrant
 VirtualBox
 Ansible
+```
 🔹 Setup Instructions
 git clone https://github.com/muhammadkamrankabeer-oss/self-healing-docker.git
 cd self-healing-docker
 vagrant up
+```
 🌐 Access Application
 
 After setup:
 
 http://192.168.56.30:8080
+```
 🔄 Self-Healing Mechanism
 
 This project uses Docker restart policies:
