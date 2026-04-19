@@ -1,59 +1,33 @@
-# 🛠️ Self-Healing WordPress Stack
+# 🚀 Self-Healing WordPress Infrastructure (DevOps Lab)
 
-## 🚀 Overview
-This project demonstrates a **self-healing WordPress infrastructure** using Infrastructure-as-Code principles with Vagrant, Ansible, and Docker.
-
-The system is designed to automatically recover from failures and maintain service availability with minimal manual intervention.
+A hybrid DevOps project demonstrating automated infrastructure provisioning, configuration management, and containerized deployment of a WordPress application with self-healing capabilities.
 
 ---
 
-## 🎯 Objective
-To build a local production-like environment that:
-- Automates infrastructure setup
-- Uses containerized services
-- Ensures service resilience through self-healing mechanisms
+## 📌 Project Overview
+
+This project simulates a production-ready environment where a WordPress application is deployed using:
+
+- **Vagrant** → Infrastructure provisioning  
+- **Ansible** → Configuration management  
+- **Docker** → Containerized application runtime  
+
+The system is designed to automatically recover from failures, ensuring high availability and minimal manual intervention.
 
 ---
 
-## 🏗️ Architecture
+## 🧠 Key Features
 
-- Vagrant → Virtual machine provisioning  
-- Ansible → Automated configuration (IaC)  
-- Docker → Containerized services  
-- Nginx Proxy Manager → Reverse proxy and domain routing  
+- 🔄 **Self-Healing Containers**  
+  Docker restart policies automatically recover failed services  
 
----
+- ⚙️ **Infrastructure as Code (IaC)**  
+  Fully automated setup using Vagrant + Ansible  
 
-## ⚙️ Tech Stack
+- 📦 **Containerized Deployment**  
+  WordPress and MySQL running in isolated containers  
 
-- Linux (Ubuntu)
-- Vagrant
-- Ansible
-- Docker & Docker Compose
-- Nginx Proxy Manager
-- WordPress & MySQL
-
----
-
-## 🔄 Features
-
-✔ Self-Healing  
-Docker restart policies ensure containers recover automatically  
-
-✔ Reverse Proxy  
-Nginx Proxy Manager enables clean local domains (e.g. wordpress.test)  
-
-✔ Infrastructure as Code  
-Entire setup is automated using Ansible  
-
-✔ One Command Deployment  
-Environment can be deployed using a single command  
-
----
-
-## 📦 How to Run
-
-### 1. Clone repository
-```bash
-git clone https://github.com/muhammadkamrankabeer-oss/self-healing-docker.git
-cd self-healing-docker
+- ⚡ **One Command Setup**  
+  Entire environment starts with:
+  ```bash
+  vagrant up
