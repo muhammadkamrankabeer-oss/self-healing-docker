@@ -1,0 +1,40 @@
+- hosts: all
+  become: yes
+
+  tasks:
+
+    - name: Update system
+      apt:
+        update_cache: yes
+
+    - name: Install Docker
+      apt:
+        name: docker.io
+        state: present
+
+    - name: Start Docker
+      service:
+        name: docker
+        state: started
+        enabled: yes
+
+    - name: Install Docker Compose (binary)
+      get_url:
+        url: https://github.com/docker/compose/releases/latest/download/docker-compose-linux-x86_64
+        dest: /usr/local/bin/docker-compose
+        mode: '0755'
+
+    - name: Create Docker directory
+      file:
+        path: /home/vagrant/docker
+        state: directory
+
+    - name: Copy docker-compose file
+      copy:
+        src: ../docker/docker-compose.yml
+        dest: /home/vagrant/docker/docker-compose.yml
+
+    - name: Run Docker containers
+      command: docker-compose up -d
+      args:
+        chdir: /home/vagrant/docker
