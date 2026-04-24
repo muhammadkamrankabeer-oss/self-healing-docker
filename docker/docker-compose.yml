@@ -5,22 +5,18 @@ services:
     restart: always
     ports:
       - "8080:80"
-    networks:
-      - app-network
     environment:
       WORDPRESS_DB_HOST: db:3306
       WORDPRESS_DB_USER: wpuser
       WORDPRESS_DB_PASSWORD: wppass
       WORDPRESS_DB_NAME: wpdb
-    depends_on:
-      - db
+    networks:
+      - app-network
 
   db:
     image: mysql:5.7
     container_name: wordpress_db
     restart: always
-    networks:
-      - app-network
     environment:
       MYSQL_DATABASE: wpdb
       MYSQL_USER: wpuser
@@ -28,6 +24,8 @@ services:
       MYSQL_ROOT_PASSWORD: rootpass
     volumes:
       - db_data:/var/lib/mysql
+    networks:
+      - app-network
 
 volumes:
   db_data:
