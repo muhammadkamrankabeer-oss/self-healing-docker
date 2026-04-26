@@ -1,0 +1,50 @@
+name: 🚀 DevOps CI/CD Pipeline
+
+on:
+  push:
+    branches: ["main"]
+
+jobs:
+
+  validate:
+    name: 🔍 Validate Project
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Checkout Code
+        uses: actions/checkout@v4
+
+      - name: 🐳 Install Docker Compose
+        run: |
+          sudo apt update
+          sudo apt install -y docker-compose
+
+      - name: ✅ Validate docker-compose.yml
+        run: docker-compose -f docker/docker-compose.yml config
+
+      - name: 📁 Check Required Files
+        run: |
+          test -f docker/prometheus.yml
+          test -f docker/alertmanager.yml
+          test -f docker/alert.rules.yml
+
+  build-test:
+    name: 🧪 Test Containers
+    runs-on: ubuntu-latest
+    needs: validate
+
+    steps:
+      - name: 📥 Checkout Code
+        uses: actions/checkout@v4
+
+      - name: 🐳 Run Stack (Test Mode)
+        run: |
+          cd docker
+          docker-compose up -d
+          sleep 10
+          docker ps
+
+      - name: 🧹 Cleanup
+        run: |
+          cd docker
+          docker-compose down
