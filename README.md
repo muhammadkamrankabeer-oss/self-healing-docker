@@ -1,117 +1,55 @@
-<<<<<<< HEAD
-# 🛡 Self-Healing Infrastructure System
+# 🚀 Self-Healing DevOps Infrastructure (Production-Style Lab)
 
 ## 👨‍💻 Author
-Muhammad Kamran Kabeer  
-DevOps Engineer | Linux & Infrastructure Automation Specialist
 
----
-
-## 🚀 Project Overview
-
-This project demonstrates a **production-style self-healing infrastructure system** built using Infrastructure as Code (IaC), containerization, and automation tools.
-
-The system is designed to simulate real-world DevOps environments where services must:
-- Recover automatically from failure
-- Maintain uptime with minimal human intervention
-- Be deployed consistently using automation
-
----
-
-## 🏗 Architecture Overview
-
-The system is built using a layered infrastructure approach:
-
-- Host Machine
-- Vagrant Virtual Machine (Ubuntu)
-- Ansible for automation
-- Docker for containerized services
-- WordPress + MySQL services
-
-Flow:
-Host → Vagrant VM → Ansible → Docker → Application Services
-
----
-
-## ⚙️ Tech Stack
-
-- Vagrant (Infrastructure Provisioning)
-- Ansible (Configuration Management)
-- Docker (Containerization)
-- Docker Compose (Service orchestration)
-- Linux (Ubuntu-based environment)
-
----
-
-## 🔄 Self-Healing Mechanism
-
-The system uses Docker restart policies:
-
-- `restart: always`
-- Automatic container recovery on failure
-- Service continuity without manual intervention
-
-This simulates basic production-level resilience.
-
----
-
-## 📦 Project Structure
-
-- ansible/ → Automation playbooks
-- docker/ → Container definitions
-- scripts/ → Helper automation scripts
-- docs/ → Project documentation
-- architecture/ → System diagrams
-- monitoring/ → Future observability setup
-
----
-
-## 🚀 Deployment Steps
-
-```bash
-vagrant up
-=======
-# 🚀 Self-Healing WordPress Infrastructure (DevOps Lab)
-
-A hybrid DevOps project demonstrating automated infrastructure provisioning, configuration management, and containerized deployment of a WordPress application with self-healing capabilities.
+**Muhammad Kamran Kabeer**
+DevOps Engineer | Linux | Automation | Cloud Enthusiast
 
 ---
 
 ## 📌 Project Overview
 
-This project simulates a production-ready environment where a WordPress application is deployed using:
+This project demonstrates a **production-style self-healing infrastructure** using modern DevOps tools.
 
-- **Vagrant** → Infrastructure provisioning  
-- **Ansible** → Configuration management  
-- **Docker** → Containerized application runtime  
+It simulates a real-world environment where services:
 
-The system is designed to automatically recover from failures, ensuring high availability and minimal manual intervention.
+* 🔄 Automatically recover from failure
+* ⚙️ Deploy consistently using Infrastructure as Code
+* 📦 Run in isolated, containerized environments
+* 📊 Are monitored using modern observability tools
 
 ---
 
 ## 🧠 Key Features
 
-- 🔄 **Self-Healing Containers**  
-  Docker restart policies automatically recover failed services  
+* 🔄 **Self-Healing Containers**
+  Docker restart policies ensure automatic recovery
 
-- ⚙️ **Infrastructure as Code (IaC)**  
-  Fully automated setup using Vagrant + Ansible  
+* ⚙️ **Infrastructure as Code (IaC)**
+  Vagrant + Ansible automate full setup
 
-- 📦 **Containerized Deployment**  
-  WordPress and MySQL running in isolated containers  
+* 📦 **Containerized Stack**
+  WordPress + MySQL + Monitoring tools
 
-- ⚡ **One Command Setup**  
-  Entire environment starts with:
-  ```bash
-  vagrant up
+* 📊 **Monitoring & Alerting**
 
------
+  * Prometheus
+  * Grafana
+  * Alertmanager
+  * Node Exporter
+  * cAdvisor
 
-  🧪 Lab + Real-World Use Case
+* ⚡ **One Command Deployment**
 
-Suitable for learning and small-scale production setups.
+```bash
+vagrant up
 ```
-🏗️ Architecture
+
+---
+
+## 🏗️ Architecture
+
+```
 Host Machine
    │
    ├── Vagrant (VM Provisioning)
@@ -120,66 +58,153 @@ Host Machine
    │               │
    │               ├── Ansible (Automation)
    │               │       ├── Install Docker
-   │               │       ├── Configure system
-   │               │       └── Deploy containers
+   │               │       ├── Configure System
+   │               │       └── Deploy Containers
    │               │
-   │               └── Docker
-   │                       ├── WordPress Container
-   │                       └── MySQL Container
+   │               └── Docker (Container Runtime)
+   │                       ├── WordPress
+   │                       ├── MySQL
+   │                       ├── Prometheus
+   │                       ├── Grafana
+   │                       ├── Alertmanager
+   │                       ├── Node Exporter
+   │                       └── cAdvisor
 ```
-⚙️ Technologies Used
-Vagrant
-Ansible
-Docker
-Docker Compose
-WordPress
-MySQL
-```
-🚀 Getting Started
-🔹 Prerequisites
-Vagrant
-VirtualBox
-Ansible
-```
-🔹 Setup Instructions
+
+---
+
+## ⚙️ Tech Stack
+
+* Vagrant
+* Ansible
+* Docker
+* Docker Compose
+* Linux (Ubuntu)
+* Prometheus
+* Grafana
+* Alertmanager
+
+---
+
+## 🚀 Getting Started
+
+### 🔹 Prerequisites
+
+* Vagrant
+* VirtualBox
+* Ansible
+
+---
+
+### 🔹 Setup
+
+```bash
 git clone https://github.com/muhammadkamrankabeer-oss/self-healing-docker.git
 cd self-healing-docker
 vagrant up
+vagrant provision
 ```
-🌐 Access Application
 
-After setup:
+---
 
-http://192.168.56.30:8080
-```
-🔄 Self-Healing Mechanism
+## 🌐 Access Services
+
+| Service      | URL                       |
+| ------------ | ------------------------- |
+| WordPress    | http://192.168.56.30:8080 |
+| Prometheus   | http://192.168.56.30:9090 |
+| Grafana      | http://192.168.56.30:3000 |
+| Alertmanager | http://192.168.56.30:9093 |
+| cAdvisor     | http://192.168.56.30:8081 |
+
+---
+
+## 🔄 Self-Healing Mechanism
 
 This project uses Docker restart policies:
 
+```yaml
 restart: always
-👉 If a container stops, it is automatically restarted.
+```
 
-💡 Use Cases
-DevOps learning labs
-Automated deployment demos
-Small business hosting
-Student training environments
-👨‍💻 Author
+👉 If a container crashes → it restarts automatically
+👉 Ensures **high availability without manual intervention**
 
-Muhammad Kamran Kabeer
-DevOps Enthusiast | Linux | Automation
+---
 
-📜 License
+## 📊 Monitoring Stack
 
-This project is open-source and available for learning and educational use.
+* Prometheus → Metrics collection
+* Grafana → Visualization dashboards
+* Alertmanager → Alerts handling
+* Node Exporter → System metrics
+* cAdvisor → Container metrics
+
+---
+
+## 🧪 Use Cases
+
+* DevOps learning labs
+* Monitoring + alerting practice
+* Infrastructure automation demos
+* Interview-ready portfolio project
+
+---
 
 ## 📸 Demo
 
 ### 🌐 WordPress Homepage
+
 ![Homepage](homepage.png)
 
 ### 🐳 Running Containers
+
 ![Docker](docker.png)
 
 ### ⚙️ Vagrant Environment
+
 ![Vagrant](vagrant.png)
+
+---
+
+## 📂 Project Structure
+
+```
+ansible/        → Playbooks
+docker/         → Docker configs
+monitoring/     → Monitoring configs
+scripts/        → Helper scripts
+docs/           → Documentation
+architecture/   → Diagrams
+```
+
+---
+
+## 🔄 CI/CD (Coming Next)
+
+This project is being upgraded with:
+
+* GitHub Actions pipeline
+* Automated validation
+* Auto deployment
+
+---
+
+## 📜 License
+
+This project is open-source and available for learning purposes.
+
+---
+
+## ⭐ Final Note
+
+This is a **real-world DevOps practice project** demonstrating:
+
+✔ Infrastructure as Code
+✔ Containerization
+✔ Monitoring & Alerting
+✔ Self-Healing Systems
+
+---
+
+💡 *Built for learning, portfolio, and real DevOps growth.*
