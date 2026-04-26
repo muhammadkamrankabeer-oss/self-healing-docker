@@ -1,3 +1,4 @@
+![CI/CD](https://github.com/muhammadkamrankabeer-oss/self-healing-docker/actions/workflows/deploy.yml/badge.svg)
 # 🚀 Self-Healing DevOps Infrastructure (Production-Style Lab)
 
 ## 👨‍💻 Author
