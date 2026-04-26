@@ -3,38 +3,52 @@
 
   tasks:
 
-    - name: Update system
+    - name: 1. Update system
       apt:
         update_cache: yes
 
-    - name: Install Docker
+    - name: 2. Install required packages
+      apt:
+        name:
+          - apt-transport-https
+          - ca-certificates
+          - curl
+          - software-properties-common
+        state: present
+
+    - name: 3. Install Docker
       apt:
         name: docker.io
         state: present
 
-    - name: Start Docker
+    - name: 4. Start Docker
       service:
         name: docker
         state: started
         enabled: yes
 
-    - name: Install Docker Compose (binary)
-      get_url:
-        url: https://github.com/docker/compose/releases/latest/download/docker-compose-linux-x86_64
-        dest: /usr/local/bin/docker-compose
-        mode: '0755'
+    - name: 5. Add vagrant user to docker group
+      user:
+        name: vagrant
+        groups: docker
+        append: yes
 
-    - name: Create Docker directory
+    - name: 6. Install Docker Compose
+      apt:
+        name: docker-compose
+        state: present
+
+    - name: 7. Create Docker directory
       file:
         path: /home/vagrant/docker
         state: directory
 
-    - name: Copy docker-compose file
+    - name: 8. Copy docker-compose file
       copy:
         src: ../docker/docker-compose.yml
         dest: /home/vagrant/docker/docker-compose.yml
 
-    - name: Run Docker containers
+    - name: 9. Run Docker containers
       command: docker-compose up -d
       args:
         chdir: /home/vagrant/docker

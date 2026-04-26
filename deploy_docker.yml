@@ -1,6 +1,6 @@
 ---
 - name: Lab 1 - The Hardened Gateway
-  hosts: localhost
+  hosts: all
   connection: local
   become: yes
 
